@@ -1,0 +1,32 @@
+{
+  "name": "dramarama-server",
+  "version": "0.0.1",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "startDev": "nodemon --exec babel-node server/server.js --presets env",
+    "build": "npm run prebuild && babel ./server -d ./build",
+    "prebuild": "rm -rf ./build && mkdir build",
+    "start": "npm run prestart && NODE_ENV=production node ./build/server.js",
+    "prestart": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Veldrovive/dramarama-server.git"
+  },
+  "author": "Aidan Dempster <aidan.dempster@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Veldrovive/dramarama-server/issues"
+  },
+  "homepage": "https://github.com/Veldrovive/dramarama-server#readme",
+  "dependencies": {
+    "express": "^4.16.1",
+    "mysql": "^2.14.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "nodemon": "^1.12.1"
+  }
+}
