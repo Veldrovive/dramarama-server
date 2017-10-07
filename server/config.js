@@ -6,5 +6,12 @@ export const dbOptions = {
   host     : "localhost",
   user     : "root",
   password : "root",
-  port     : "3306"
-}
+  port     : "3306",
+  database : "dramaRama"
+};
+
+//Startup commands for a database
+export const databaseCommands={
+  createVideosTable: 'CREATE TABLE videos (name LONGTEXT NOT NULL, youtubeId VARCHAR(45) NOT NULL, creatorId VARCHAR(45) NOT NULL,rating INT NOT NULL DEFAULT 0,PRIMARY KEY (youtubeId))',
+  createUsersTable : 'CREATE TABLE users (userName VARCHAR(45) NOT NULL, id VARCHAR(45) NOT NULL, description LONGTEXT NULL, PRIMARY KEY (id))'
+};

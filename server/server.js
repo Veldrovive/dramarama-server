@@ -1,29 +1,28 @@
 import express from 'express';
 import * as config from './config';
-import mysql from 'mysql';
+import * as database from './database';
 const app = express();
 
-const connection = mysql.createConnection({
-  host     : process.env.RDS_HOSTNAME || config.dbOptions.host,
-  user     : process.env.RDS_USERNAME || config.dbOptions.user,
-  password : process.env.RDS_PASSWORD || config.dbOptions.password,
-  port     : process.env.RDS_PORT || config.dbOptions.port
-});
-
-connection.connect((err) => {
-  if(err){
-    console.error('Failed to connect to database: '+err.stack);
-    return;
-  }
-
-  console.log("Established connection to database");
-  //Only start the server if the connection is successful
-  const listener = app.listen(config.PORT, () => {
-    console.log(`Find at: http://localhost:${listener.address().port}`);
-  });
-});
-
-app.get("/:id", (req, res) => {
+app.get("/test/:id", (req, res) => {
   const params = req.params;
   res.send(`You said id: ${params.id}`);
 });
+
+app.get("/tables", async (req, res) => {
+  const tables = await database.getTables();
+  res.send(tables);
+})
+
+const listener = app.listen(config.PORT, () => {
+  console.log(`Find at: http://localhost:${listener.address().port}`);
+});
+
+//If connection test fails, shut down express server
+database.connect()
+  .then(() => {
+    console.log("Startup Successful");
+  })
+  .catch(err => {
+    console.log("Database error");
+    listener.close();
+  });

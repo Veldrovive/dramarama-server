@@ -7,8 +7,9 @@
     "startDev": "nodemon --exec babel-node server/server.js --presets env",
     "build": "npm run prebuild && babel ./server -d ./build",
     "prebuild": "rm -rf ./build && mkdir build",
-    "start": "npm run prestart && NODE_ENV=production node ./build/server.js",
-    "prestart": "npm run build"
+    "buildStart": "npm run preBuildStart && NODE_ENV=production node ./build/server.js",
+    "preBuildStart": "npm run build",
+    "start": "NODE_ENV=production node ./build/server.js"
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,7 @@
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.6.0",
     "nodemon": "^1.12.1"
   }
